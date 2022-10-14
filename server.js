@@ -9,6 +9,8 @@ app.use(express.urlencoded({extended:true}));
 //for json
 app.use(express.json());
 
+app.use(express.static('public'));
+
 const {animals} = require('./data/animals.json');
 
 function filterByQuery(query, animalsArray)
@@ -122,4 +124,16 @@ app.post('/api/animals',(req,res)=>{
 
 app.listen(PORT,()=>{
     console.log(`API server in port ${PORT}!`);
+});
+
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./public/index.html'));
+});
+
+app.get('/animals',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./public/animals.html'));
+});
+
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./public/index.html'));
 });
